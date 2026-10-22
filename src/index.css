@@ -1,0 +1,180 @@
+@import 'tailwindcss';
+
+/* Nebula Space design tokens (from the Stitch export) */
+@theme {
+  --color-on-surface: #e3e0f6;
+  --color-on-background: #e3e0f6;
+  --color-background: #121221;
+  --color-error: #ffb4ab;
+  --color-surface-bright: #383849;
+  --color-inverse-surface: #e3e0f6;
+  --color-tertiary: #d2bcfa;
+  --color-outline-variant: #494454;
+  --color-surface-container-lowest: #0d0d1c;
+  --color-secondary: #7bd0ff;
+  --color-error-container: #93000a;
+  --color-secondary-container: #00a6e0;
+  --color-surface-container: #1e1e2e;
+  --color-primary-container: #a078ff;
+  --color-inverse-primary: #6d3bd7;
+  --color-on-error: #690005;
+  --color-on-secondary-container: #00374d;
+  --color-on-surface-variant: #cbc3d7;
+  --color-tertiary-container: #9b87c1;
+  --color-surface-container-low: #1a1a2a;
+  --color-surface-dim: #121221;
+  --color-on-primary: #3c0091;
+  --color-on-secondary: #00354a;
+  --color-on-error-container: #ffdad6;
+  --color-on-tertiary: #38265a;
+  --color-surface-container-high: #292839;
+  --color-outline: #958ea0;
+  --color-surface-container-highest: #343344;
+  --color-primary: #d0bcff;
+  --color-surface-variant: #343344;
+  --color-on-primary-container: #340080;
+  --color-surface: #121221;
+
+  --font-headline: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+
+  --text-headline-xl: 48px;
+  --text-headline-xl--line-height: 56px;
+  --text-headline-xl--letter-spacing: -0.02em;
+  --text-headline-xl--font-weight: 700;
+  --text-headline-lg: 36px;
+  --text-headline-lg--line-height: 44px;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-lg-mobile: 28px;
+  --text-headline-lg-mobile--line-height: 36px;
+  --text-headline-lg-mobile--font-weight: 600;
+  --text-headline-md: 28px;
+  --text-headline-md--line-height: 36px;
+  --text-headline-md--font-weight: 600;
+  --text-headline-sm: 22px;
+  --text-headline-sm--line-height: 28px;
+  --text-headline-sm--font-weight: 500;
+  --text-body-lg: 18px;
+  --text-body-lg--line-height: 28px;
+  --text-body-md: 16px;
+  --text-body-md--line-height: 24px;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 20px;
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--letter-spacing: 0.01em;
+  --text-label-lg--font-weight: 500;
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--letter-spacing: 0.01em;
+  --text-label-md--font-weight: 500;
+
+  --spacing-gutter: 1.5rem;
+  --spacing-margin: 2rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2.5rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* keep anchored sections clear of the fixed header */
+    scroll-padding-top: 5rem;
+  }
+  body {
+    margin: 0;
+    overscroll-behavior: none;
+    background-color: var(--color-surface);
+    color: var(--color-on-surface);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-headline);
+  }
+}
+
+/* Icons, served from this site (no requests to Google). A static weight-400 / outline
+   cut of the Material Symbols font with all icons, so admins can pick any icon name.
+   Regenerate: fontTools.varLib.instancer material-symbols-outlined.woff2 wght=400 opsz=24 FILL=0 GRAD=0 */
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url('./assets/fonts/material-symbols-outlined-400.woff2') format('woff2');
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+
+/* Scroll reveal: see components/Reveal.tsx */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s ease-out,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero load-in: on screen at page load, so it animates immediately */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Mobile menu overlay */
+@keyframes menu-in {
+  from {
+    opacity: 0;
+  }
+}
+.menu-overlay {
+  animation: menu-in 0.25s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .fade-up,
+  .menu-overlay {
+    animation: none;
+  }
+}
