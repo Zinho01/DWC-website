@@ -4,3 +4,4 @@ dist
 server/content.json
 server/uploads
 *.tmp
+.vercel

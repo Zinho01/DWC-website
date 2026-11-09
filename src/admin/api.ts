@@ -28,7 +28,10 @@ export async function login(password: string): Promise<string> {
     body: JSON.stringify({ password }),
   })
   if (res.status === 401) throw new UnauthorizedError('Onjuist wachtwoord')
-  if (!res.ok) throw new Error('Inloggen mislukt — draait de server?')
+  if (!res.ok) {
+    const body = (await res.json().catch(() => null)) as { error?: string } | null
+    throw new Error(body?.error ?? 'Inloggen mislukt — draait de server?')
+  }
   const { token } = (await res.json()) as { token: string }
   return token
 }
@@ -42,12 +45,12 @@ export async function logout(token: string): Promise<void> {
   await fetch('/api/logout', { method: 'POST', headers: { Authorization: `Bearer ${token}` } }).catch(() => {})
 }
 
-export const MAX_UPLOAD_BYTES = 5 * 1024 * 1024
+export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024
 export const UPLOAD_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
 
 export async function uploadImage(file: File): Promise<string> {
   if (!UPLOAD_TYPES.includes(file.type)) throw new Error('Kies een JPG, PNG, WebP of GIF afbeelding')
-  if (file.size > MAX_UPLOAD_BYTES) throw new Error('Afbeelding is groter dan 5 MB')
+  if (file.size > MAX_UPLOAD_BYTES) throw new Error('Afbeelding is groter dan 4 MB')
   const token = getToken()
   if (!token) throw new UnauthorizedError('Sessie verlopen, log opnieuw in')
   const res = await fetch('/api/upload', {

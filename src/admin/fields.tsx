@@ -248,7 +248,7 @@ export function ImageField({ label = 'Afbeelding', value, onChange, round }: Ima
           {error}
         </p>
       ) : (
-        <p className="text-label-md text-on-surface-variant/70 mt-1.5">JPG, PNG, WebP of GIF, max 5 MB.{round ? '' : ' Zonder afbeelding wordt het icoon getoond.'}</p>
+        <p className="text-label-md text-on-surface-variant/70 mt-1.5">JPG, PNG, WebP of GIF, max 4 MB.{round ? '' : ' Zonder afbeelding wordt het icoon getoond.'}</p>
       )}
     </div>
   )
