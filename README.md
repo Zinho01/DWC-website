@@ -40,7 +40,7 @@ Pushing to GitHub deploys automatically when the repo is connected to a Vercel p
 
 One-time setup in the Vercel dashboard:
 
-1. **Storage → Create → Blob** (private), and connect it to this project for all environments. This adds `BLOB_READ_WRITE_TOKEN`. (For a public store also set `BLOB_ACCESS=public`.)
+1. **Storage → Create → Blob** (private), and connect it to this project for all environments. This adds `BLOB_READ_WRITE_TOKEN` or, for OIDC, `BLOB_STORE_ID` (both work). (For a public store also set `BLOB_ACCESS=public`.)
 2. **Settings → Environment Variables**, for Production and Preview:
    - `ADMIN_PASSWORD`: a long, unique password
    - `SESSION_SECRET`: a random string, e.g. `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"`

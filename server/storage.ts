@@ -150,7 +150,7 @@ function missingStorage(): Storage {
     throw new HttpError(503, 'Opslag is niet ingesteld: koppel een Vercel Blob store aan dit project')
   }
   return {
-    description: 'none (BLOB_READ_WRITE_TOKEN is missing)',
+    description: 'none (BLOB_READ_WRITE_TOKEN or BLOB_STORE_ID is missing)',
     readContent: async () => null,
     writeContent: fail,
     writeUpload: fail,
@@ -160,7 +160,9 @@ function missingStorage(): Storage {
 }
 
 export function createStorage(localDir: string): Storage {
-  if (process.env.BLOB_READ_WRITE_TOKEN) return blobStorage(process.env.BLOB_ACCESS === 'public' ? 'public' : 'private')
+  // A Blob store connected to the Vercel project sets BLOB_READ_WRITE_TOKEN (token auth)
+  // or BLOB_STORE_ID (OIDC auth)
+  if (process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID) return blobStorage(process.env.BLOB_ACCESS === 'public' ? 'public' : 'private')
   if (process.env.VERCEL) return missingStorage()
   return localStorage(localDir)
 }
